@@ -25,6 +25,9 @@
     "morgan": "~1.6.1",
     "serve-favicon": "~2.3.0",
     "sequelize": "3.x",
-    "mysql": "2.x"
+    "mysql": "2.x",
+    "uuid": "~2.0.1",
+    "express-session": "~1.11.3",
+    "express-flash": "~0.0.2"
   }
 }

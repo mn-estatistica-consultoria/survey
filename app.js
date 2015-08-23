@@ -4,6 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var flash = require('express-flash');
+var uuid = require('uuid');
 
 var routes = require('./routes/index');
 var admin = require('./routes/admin');
@@ -21,6 +24,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  genid: function(req) {
+    return uuid.v1();
+  },
+  secret: 'keyboard cat',
+  cookie: {
+    maxAge: 60000
+  }
+}));
+app.use(flash());
 
 app.use('/', routes);
 app.use('/admin', admin);

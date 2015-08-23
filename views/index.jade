@@ -5,11 +5,19 @@ block content
     .container
       .row
         .col-md-12
-          h1= question.text
-          each r in responses
-            .radio
-              label
-                input(type='radio', name='survey_response', value=r.id)
-                p= r.text
-          p
-            a.btn.btn-primary.btn-lg(href='#', role='button') Submit
+          if messages.success
+            .alert.alert-success(role='alert')= messages.success
+          if messages.error
+            .alert.alert-danger(role='alert')= messages.error
+
+          form(method='post', action='/')
+            h1= question.text
+            each r in responses
+              .radio
+                label
+                  input(type='radio', name='response_id', id='response_id_'+r.id, value=r.id)
+                  p= r.text
+            p
+              button.btn.btn-primary.btn-lg(type='submit', role='button') Submit
+            input(type='hidden', name='question_id', id='question_id', value=question.id)
+            input(type='hidden', name='guest_id', id='guest_id', value=guest.id)

@@ -50,12 +50,12 @@ router.post('/questions/add', function(req, res, next) {
   })
   .save()
   .then(function(question) {
-    res.append('success', 'Question created')
-      .redirect('/admin/questions');
+    req.flash('success', 'Question created');
+    res.redirect('/admin/questions');
   })
   .catch(function(error) {
-    res.append('error', error)
-      .redirect('/admin/questions');
+    req.flash('error', error);
+    res.redirect('/admin/questions');
   });
 });
 
@@ -66,12 +66,12 @@ router.post('/questions/:id/add', function(req, res, next) {
   })
   .save()
   .then(function(response) {
-    res.append('success', 'Response created')
-      .redirect('/admin/questions/'+req.params.id);
+    req.flash('success', 'Response created');
+    res.redirect('/admin/questions/'+req.params.id);
   })
   .catch(function(error) {
-    res.append('error', error)
-      .redirect('/admin/questions/'+req.params.id);
+    req.append('error', error);
+    res.redirect('/admin/questions/'+req.params.id);
   });
 });
 
