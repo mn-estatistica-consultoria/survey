@@ -1,0 +1,46 @@
+extends layout
+
+block content
+  .row
+    .col-md-12
+      h2 Edit Question #{question.id}
+  form(method='post', action='/admin/questions/'+question.id)
+    .row
+      .col-md-6
+        .form-group
+          textarea.input-lg(name='question_text', id='question_text', class='form-control', rows='3')= question.text
+      .col-md-6
+        ul.list-group
+          each r in question.Responses
+            li.list-group-item
+              .row
+                .col-xs-8
+                  input.form-control(type='text', value=r.text)
+                .col-xs-4
+                  button.btn.btn-success(type='submit')
+                    i.glyphicon.glyphicon-check
+                  a.btn.btn-danger(href='#')
+                    i.glyphicon.glyphicon-trash
+        a.btn.btn-success(href-'#', data-toggle='modal', data-target='#createModal')
+          i.glyphicon.glyphicon-plus
+          span  Add a Response
+    hr
+    .row
+      .col-md-12
+        a.btn.btn-link(href='/admin/questions') Cancel
+        button.btn.btn-primary Save
+
+  .modal.fade(id='createModal', tabindex='-1', role='dialog', aria-labelledby='createModalLabel')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+          h4.modal-title(id='createModalLabel') Add a Response
+        form(method='post', action='/admin/questions/'+question.id+'/add')
+          .modal-body
+            .form-group
+              input.form-control(type='text', name='response_text', id='response_text', placeholder='Enter a response')
+          .modal-footer
+            button.btn.btn-link(type='button', data-dismiss='modal') Close
+            button.btn.btn-primary(type='submit') Save

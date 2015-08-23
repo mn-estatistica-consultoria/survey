@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  .container
+    .row
+      a.btn.btn-primary(href='#', data-toggle='modal', data-target='#createModal')
+        i.glyphicon.glyphicon-plus
+        span  Add a Question
+    hr
+    .row
+      table.table.table-striped
+        each q in questions
+          tr
+            td= q.id
+            td
+              a(href='/admin/questions/'+q.id)= q.text
+            td
+              a.btn.btn-success(href='/admin/questions/'+q.id)
+                i.glyphicon.glyphicon-pencil
+              a.btn.btn-danger(href='/admin/questions/'+q.id+'/delete')
+                i.glyphicon.glyphicon-trash
+
+  .modal.fade(id='createModal', tabindex='-1', role='dialog', aria-labelledby='createModalLabel')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+          h4.modal-title(id='createModalLabel') Add a Question
+        form(method='post', action='/admin/questions/add')
+          .modal-body
+            .form-group
+              input.form-control(type='text', name='question_text', id='question_text', placeholder='Enter a question')
+          .modal-footer
+            button.btn.btn-link(type='button', data-dismiss='modal') Close
+            button.btn.btn-primary(type='submit') Save
