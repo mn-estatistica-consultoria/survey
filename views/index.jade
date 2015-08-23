@@ -1,5 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .jumbotron
+    .container
+      .row
+        .col-md-12
+          h1= question.text
+          each r in responses
+            .radio
+              label
+                input(type='radio', name='survey_response', value=r.id)
+                p= r.text
+          p
+            a.btn.btn-primary.btn-lg(href='#', role='button') Submit

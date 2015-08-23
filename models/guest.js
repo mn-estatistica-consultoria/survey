@@ -9,7 +9,6 @@ module.exports = function(sequelize, DataTypes) {
             model: models.QuestionGuest,
             unique: false
           },
-          foreignKey: 'guest_id',
           constraints: false
         });
       }

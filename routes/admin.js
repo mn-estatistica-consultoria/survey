@@ -61,7 +61,7 @@ router.post('/questions/add', function(req, res, next) {
 
 router.post('/questions/:id/add', function(req, res, next) {
   models.Response.build({
-    question_id: req.params.id,
+    QuestionId: req.params.id,
     text: req.body.response_text
   })
   .save()

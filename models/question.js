@@ -11,12 +11,10 @@ module.exports = function(sequelize, DataTypes) {
             model: models.QuestionGuest,
             unique: false
           },
-          foreignKey: 'question_id',
           constraints: false
         });
 
         Question.hasMany(models.Response, {
-          foreignKey: 'question_id',
           constraints: false
         });
       }

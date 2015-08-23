@@ -7,7 +7,6 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         Response.belongsTo(models.Question, {
-          foreignKey: 'question_id',
           constraints: false
         });
       }
