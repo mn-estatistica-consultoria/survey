@@ -19,7 +19,7 @@ You also need to update [config/database.json](./config/database.json) with your
 	{
 		"username": "root",
 		"password": "root",
-		"database": "sumo_survey",
+		"database": "survey",
 		"host": "127.0.0.1",
 		"dialect": "mysql"
 	}
