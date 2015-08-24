@@ -28,7 +28,7 @@ app.use(session({
   genid: function(req) {
     return uuid.v1();
   },
-  secret: 'keyboard cat',
+  secret: 'boom goes the dynamite',
   cookie: {
     maxAge: 60000
   }

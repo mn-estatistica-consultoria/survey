@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  .container
+    .row
+      h2 Manage Guests
+      table.table.table-striped
+        each g in guests
+          tr
+            td= g.id
+            td
+              a(href='/admin/guests/'+g.id)= g.uuid
+            td.col-md-2
+              a.btn.btn-primary.btn-block(href='/admin/guests/'+g.id)
+                i.glyphicon.glyphicon-eye-open
+                span  View
+              a.btn.btn-danger.btn-block(href='/admin/guests/' + g.id + '/delete')
+                i.glyphicon.glyphicon-trash
+                span  Delete
+      +pagination(pagination.current, pagination.numPages)

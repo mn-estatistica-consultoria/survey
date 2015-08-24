@@ -1,0 +1,25 @@
+mixin pagination(current, total)
+  - var i = 1
+  - var prev = current - 1;
+  - var next = current + 1;
+  nav
+    ul.pagination
+      if prev > 0
+        li
+          a(href='?page='+prev, aria-label='Previous')
+            span(aria-hidden='true') &laquo;
+      else
+        li.disabled
+          a(href='#', aria-label='Previous')
+            span(aria-hidden='true') &laquo;
+      while i <= total
+        li
+          a(href='?page='+i)= i++
+      if next <= total
+        li
+          a(href='?page='+next, aria-label='Next')
+            span(aria-hidden='true') &raquo;
+      else
+        li.disabled
+          a(href='#', aria-label='Next')
+            span(aria-hidden='true') &raquo;

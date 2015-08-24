@@ -3,13 +3,6 @@ extends layout
 block content
   .container
     .row
-      .jumbotron.hidden-xs
-        h1 Hello World!
-        p This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
-        p
-          a.btn.btn-primary.btn-lg(href='#', role='button') Learn more
-
-    .row
       .col-md-6
         .panel.panel-default
           .panel-heading Recent Questions
@@ -19,6 +12,8 @@ block content
                 td= q.id
                 td
                   a(href='/admin/questions/'+q.id)= q.text
+          .panel-footer
+            a.btn.btn-primary(href='/admin/questions') See All
       .col-md-6
         .panel.panel-default
           .panel-heading Recent Guests
@@ -27,4 +22,6 @@ block content
               tr
                 td= g.id
                 td
-                  a(href='/admin/guests/'+g.id)= g.id
+                  a(href='/admin/guests/'+g.id)= g.uuid
+          .panel-footer
+            a.btn.btn-primary(href='/admin/guests') See All

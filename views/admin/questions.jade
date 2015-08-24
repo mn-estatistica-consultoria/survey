@@ -3,22 +3,29 @@ extends layout
 block content
   .container
     .row
-      a.btn.btn-primary(href='#', data-toggle='modal', data-target='#createModal')
-        i.glyphicon.glyphicon-plus
-        span  Add a Question
-    hr
+      .col-md-8
+        h2 Manage Questions
+      .col-md-4
+        a.btn.btn-primary.btn-block(href='#', data-toggle='modal', data-target='#createModal')
+          i.glyphicon.glyphicon-plus
+          span  Add a Question
     .row
       table.table.table-striped
         each q in questions
           tr
-            td= q.id
             td
               a(href='/admin/questions/'+q.id)= q.text
-            td
-              a.btn.btn-success(href='/admin/questions/'+q.id)
+            td.col-md-2
+              a.btn.btn-primary.btn-block(href='/admin/questions/'+q.id+'/results')
+                i.glyphicon.glyphicon-eye-open
+                span  View Results
+              a.btn.btn-success.btn-block(href='/admin/questions/'+q.id)
                 i.glyphicon.glyphicon-pencil
-              a.btn.btn-danger(href='/admin/questions/'+q.id+'/delete')
+                span  Edit
+              a.btn.btn-danger.btn-block(href='/admin/questions/'+q.id+'/delete')
                 i.glyphicon.glyphicon-trash
+                span  Delete
+    +pagination(pagination.current, pagination.numPages)
 
   .modal.fade(id='createModal', tabindex='-1', role='dialog', aria-labelledby='createModalLabel')
     .modal-dialog(role='document')

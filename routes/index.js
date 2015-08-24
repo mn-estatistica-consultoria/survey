@@ -37,7 +37,8 @@ router.get('/', function(req, res, next) {
             res.render('index', {
               question: question,
               responses: responses,
-              guest: guest
+              guest: guest,
+              title: question.text
             });
           });
         });

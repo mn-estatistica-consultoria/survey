@@ -1,7 +1,9 @@
+include ../mixins/pagination.jade
+
 doctype html
 html(lang="en")
   head
-    title= title
+    title Survey Admin
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap-theme.css')
@@ -19,12 +21,14 @@ html(lang="en")
         .collapse.navbar-collapse(id='bs-example-navbar-collapse-1')
           ul.nav.navbar-nav
             li
-              a(href='/admin/questions') Manage Questions
+              a(href='/admin/questions') Questions
             li
-              a(href='/admin/guests') Manage Guests
+              a(href='/admin/guests') Guests
     #content.container
       include ../message.jade
       block content
+      hr
+      p &copy; 2015
 
     script(type='text/javascript', src='/javascripts/jquery.js')
     script(type='text/javascript', src='/javascripts/bootstrap.js')

@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  .row
+    .col-md-12
+      h2= question.text
+  hr
+  table.table
+    thead
+      tr
+        th Response
+        th Total Votes
+      each r in responses
+        tr
+          td= r.text
+          td= r.totalVotes
