@@ -20,7 +20,7 @@ block content
                 .col-xs-6
                   input.form-control(type='text', name='response_text', id='response_text_'+r.id, value=r.text)
                 .col-xs-3
-                  button.btn.btn-success.btn-block(type='submit')
+                  button.btn.btn-success.btn-block(type='submit',alt='Save')
                     i.glyphicon.glyphicon-check
                 .col-xs-3
                   a.btn.btn-danger.btn-block(href='/admin/questions/' + question.id + '/responses/' + r.id + '/delete')
