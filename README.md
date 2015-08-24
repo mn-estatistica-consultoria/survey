@@ -12,7 +12,7 @@ The first step is to check out the code from Github.
 	# https
 	git clone https://github.com/bubbafoley/survey.git
 
-Now it's time to set up the database. Create a new MySQL database called `survey` and import the `db.sql` file from the repository. This creates the database schema and also adds some sample data that can be viewed from the admin section.
+Now it's time to set up the database. Create a new MySQL database called `survey` and import the [./db.sql](db.sql) file from the repository. This creates the database schema and also adds some sample data that can be viewed from the admin section.
 
 Next install all of Node dependencies with npm and start the web server.
 
