@@ -70,6 +70,10 @@ When viewing guest information you can see their survey responses in addition to
 
 ![View guest screen](./public/images/guest.png)
 
+The users screen shows a list of all administrators and allows for the creation of new admins. The ability to remove the default admin account has been disabled to prevent getting locked out of the system. When adding a new user the app checks against the current user database to keep usernames unique. This constraint is also enforced on the backend through a unique index in the MySQL database table.
+
+![Add user screen](./public/images/adduser.png)
+
 ## Mobile Responsive
 
 The app uses Bootstrap's responsive utilities so there is a seamless experience between desktop and mobile.
