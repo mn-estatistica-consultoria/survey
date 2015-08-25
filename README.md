@@ -41,7 +41,12 @@ When a new user visits the app they are given a unique identifier that is stored
 
 ## Admin Section
 
-The admin section is available at [http://localhost:3000/admin](). For the purpose of this demo it has not been password protected. The dashboard shows the 5 most recent questions and guests. Using the top navigation you can access both the question list and the guest list.
+The admin section is available at [http://localhost:3000/admin](). To log in with the default administrator account you can use the following credentials:
+
+**Username**: administrator
+**Password**: admin123
+
+The dashboard shows the 5 most recent questions and guests. Using the top navigation you can access both the question list and the guest list.
 
 ![Admin dashboard](./public/images/dashboard.png)
 
