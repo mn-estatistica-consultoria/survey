@@ -4,6 +4,67 @@ var models = require('../models');
 var bcrypt = require('bcrypt');
 var util = require('util');
 
+router.use(function authCheck(req, res, next) {
+  // check if an admin user is logged in
+  if ( ! req.session.loggedIn) {
+    // process login
+    if (req.path == '/login' && req.method == 'POST') {
+      req.checkBody('username', 'Invalid username.')
+        .notEmpty().withMessage('Please enter your username');
+      req.checkBody('password', 'Invalid password.')
+        .notEmpty().withMessage('Please enter your password');
+
+      var errors = req.validationErrors();
+
+      if ( ! errors) {
+        models.User.findOne({
+          where: {
+            username: req.body.username
+          }
+        })
+        .then(function(user) {
+          if ( ! user) {
+            req.flash('error', 'Login failed. Username not found.');
+            res.redirect('/admin' + req.session.originalPath);
+            return;
+          }
+          
+          bcrypt.compare(req.body.password, user.password, function(err, matches) {
+            if (matches) {
+              console.log('loggin the user in');
+              req.session.loggedIn = true;
+              req.session.username = user.username;
+              req.flash('success', 'Logged in');
+            }
+            else {
+              req.flash('error', 'Login failed. Username or password does not match.');
+            }
+            res.redirect('/admin' + req.session.originalPath);
+          });
+        });
+        return;
+      }
+
+      req.flash('error', 'There have been validation errors: ' + util.inspect(errors));
+    }
+    else {
+      req.session.originalPath = (req.path == '/login') ? '/' : req.path;
+    }
+
+    res.render('admin/login');
+    return;
+  }
+
+  return next();
+});
+
+router.get('/logout', function(req, res, next) {
+  req.session.loggedIn = false;
+  req.session.username = null;
+  req.flash('success', 'Logged out.');
+  res.redirect('/admin');
+});
+
 router.get('/', function(req, res, next) {
   models.Question.findAll({
     limit: 5,
@@ -375,6 +436,23 @@ router.get('/users/:id/delete', function(req, res, next) {
   .then(function() {
     req.flash('success', 'User has been deleted');
     res.redirect('/admin/users');
+  });
+});
+
+router.get('/users/validate', function(req, res, next) {
+  models.User.findOne({
+    where: {
+      username: req.query.username
+    }
+  })
+  .then(function(user) {
+    if ( ! user) {
+      res.sendStatus(200);
+    }
+    else {
+      res.writeHead(400, 'Username is taken.');
+      res.send();
+    }
   });
 });
 

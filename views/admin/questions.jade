@@ -34,10 +34,11 @@ block content
           button.close(type='button', data-dismiss='modal', aria-label='Close')
             span(aria-hidden='true') &times;
           h4.modal-title(id='createModalLabel') Add a Question
-        form(method='post', action='/admin/questions/add')
+        form(method='post', action='/admin/questions/add', data-toggle='validator')
           .modal-body
             .form-group
-              input.form-control(type='text', name='question_text', id='question_text', placeholder='Enter a question')
+              input.form-control(type='text', name='question_text', id='question_text', placeholder='Enter a question', required)
+              .help-block.with-errors
           .modal-footer
             button.btn.btn-link(type='button', data-dismiss='modal') Close
             button.btn.btn-primary(type='submit') Save

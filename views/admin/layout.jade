@@ -26,6 +26,8 @@ html(lang="en")
               a(href='/admin/guests') Guests
             li
               a(href='/admin/users') Users
+            li
+              a(href='/admin/logout') Log Out
     #content.container
       include ../message.jade
       block content
@@ -33,3 +35,4 @@ html(lang="en")
 
     script(type='text/javascript', src='/javascripts/jquery.js')
     script(type='text/javascript', src='/javascripts/bootstrap.js')
+    script(type='text/javascript', src='/javascripts/validator.js')

@@ -33,7 +33,9 @@ app.use(session({
   secret: 'boom goes the dynamite',
   cookie: {
     maxAge: 60000
-  }
+  },
+  resave: false,
+  saveUninitialized: false
 }));
 app.use(flash());
 

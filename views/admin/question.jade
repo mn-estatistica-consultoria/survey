@@ -6,19 +6,21 @@ block content
       h2 Edit Question #{question.id}
   .row
     .col-md-6
-      form(method='post', action='/admin/questions/'+question.id)
+      form(method='post', action='/admin/questions/'+question.id, data-toggle='validator')
         .form-group
-          textarea.input-lg(name='question_text', id='question_text', class='form-control', rows='3')= question.text
+          textarea.input-lg(name='question_text', id='question_text', class='form-control', rows='3', required)= question.text
+          .help-block.with-errors
         button.btn.btn-primary.btn-block Save
         a.btn.btn-link.btn-block(href='/admin/questions') Cancel
     .col-md-6
       ul.list-group
         each r in question.Responses
           li.list-group-item
-            form(method='post', action='/admin/questions/' + question.id + '/responses/' + r.id)
+            form(method='post', action='/admin/questions/' + question.id + '/responses/' + r.id, data-toggle='validator')
               .row
                 .col-xs-6
-                  input.form-control(type='text', name='response_text', id='response_text_'+r.id, value=r.text)
+                  input.form-control(type='text', name='response_text', id='response_text_'+r.id, value=r.text, required)
+                  .help-block.with-errors
                 .col-xs-3
                   button.btn.btn-success.btn-block(type='submit',alt='Save')
                     i.glyphicon.glyphicon-check
@@ -45,10 +47,11 @@ block content
           button.close(type='button', data-dismiss='modal', aria-label='Close')
             span(aria-hidden='true') &times;
           h4.modal-title(id='createModalLabel') Add a Response
-        form(method='post', action='/admin/questions/'+question.id+'/responses/add')
+        form(method='post', action='/admin/questions/'+question.id+'/responses/add', data-toggle='validator')
           .modal-body
             .form-group
-              input.form-control(type='text', name='response_text', id='response_text', placeholder='Enter a response')
+              input.form-control(type='text', name='response_text', id='response_text', placeholder='Enter a response', required)
+              .help-block.with-errors
           .modal-footer
             button.btn.btn-link(type='button', data-dismiss='modal') Close
             button.btn.btn-primary(type='submit') Save

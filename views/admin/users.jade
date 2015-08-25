@@ -28,17 +28,20 @@ block content
           button.close(type='button', data-dismiss='modal', aria-label='Close')
             span(aria-hidden='true') &times;
           h4.modal-title(id='createModalLabel') Add a User
-        form(method='post', action='/admin/users/add')
+        form(method='post', action='/admin/users/add', data-toggle='validator')
           .modal-body
             .form-group
               label.control-label(for='#username') Username
-              input.form-control(type='text', name='username', id='username', placeholder='Enter a username')
+              input.form-control(type='text', name='username', id='username', placeholder='Enter a username', required, data-minlength='6', data-maxlength='20', data-remote='/admin/users/validate')
+              .help-block.with-errors
             .form-group
               label.control-label(for='#password') Password
-              input.form-control(type='password', name='password', id='password')
+              input.form-control(type='password', name='password', id='password', required, data-minlength='6', data-match='#password2')
+              .help-block.with-errors
             .form-group
               label.control-label(for='#password2') Confirm
               input.form-control(type='password', name='password2', id='password2')
+              .help-block.with-errors
           .modal-footer
             button.btn.btn-link(type='button', data-dismiss='modal') Close
             button.btn.btn-primary(type='submit') Save

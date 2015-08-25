@@ -7,7 +7,7 @@
 #
 # Host: localhost (MySQL 5.5.27)
 # Database: survey
-# Generation Time: 2015-08-25 16:25:24 +0000
+# Generation Time: 2015-08-25 17:58:02 +0000
 # ************************************************************
 
 
@@ -43,7 +43,8 @@ INSERT INTO `Guests` (`id`, `uuid`, `ipAddress`, `userAgent`, `createdAt`, `upda
 VALUES
 	(1,'a04c6a70-49bc-11e5-85d0-a3c44b3241ae','::ffff:127.0.0.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:40.0) Gecko/20100101 Firefox/40.0','2015-08-23 12:30:19','2015-08-23 12:30:19',NULL),
 	(2,'4e4844a0-4a7b-11e5-bd4e-8f66aae7ff59','::ffff:127.0.0.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:40.0) Gecko/20100101 Firefox/40.0','2015-08-24 11:15:15','2015-08-24 11:15:15',NULL),
-	(3,'62d18800-4a7b-11e5-bd4e-8f66aae7ff59','::ffff:127.0.0.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:40.0) Gecko/20100101 Firefox/40.0','2015-08-24 11:15:50','2015-08-24 11:15:50',NULL);
+	(3,'62d18800-4a7b-11e5-bd4e-8f66aae7ff59','::ffff:127.0.0.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:40.0) Gecko/20100101 Firefox/40.0','2015-08-24 11:15:50','2015-08-24 11:15:50',NULL),
+	(4,'2c65b660-4b48-11e5-8f4f-7511ae585b9a','::ffff:127.0.0.1','Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:40.0) Gecko/20100101 Firefox/40.0','2015-08-25 11:41:45','2015-08-25 11:41:45',NULL);
 
 /*!40000 ALTER TABLE `Guests` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -150,7 +151,6 @@ VALUES
 	(6,3,'4+','2015-08-23 11:10:50','2015-08-23 11:10:50',NULL),
 	(7,3,'I prefer not to answer','2015-08-23 11:11:01','2015-08-23 11:11:01',NULL),
 	(8,1,'Coca-Cola','2015-08-23 11:42:08','2015-08-23 11:42:08',NULL),
-	(9,1,'Pepsi','2015-08-23 11:43:14','2015-08-23 11:43:14',NULL),
 	(10,1,'Dr. Pepper','2015-08-23 11:43:21','2015-08-23 11:43:21',NULL),
 	(11,1,'RC Cola','2015-08-23 11:44:39','2015-08-23 11:44:39',NULL),
 	(12,0,'Shasta','2015-08-23 11:46:15','2015-08-23 11:46:15',NULL),
@@ -199,7 +199,8 @@ CREATE TABLE `Users` (
   `createdAt` timestamp NULL DEFAULT NULL,
   `updatedAt` timestamp NULL DEFAULT NULL,
   `deletedAt` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `Users` WRITE;
