@@ -46,6 +46,8 @@ The admin section is available at [http://localhost:3000/admin](). To log in wit
 **Username**: administrator
 **Password**: admin123
 
+Passwords are hashed using the [bcrypt](https://www.npmjs.com/package/bcrypt) library using a 10 round hash.
+
 The dashboard shows the 5 most recent questions and guests. Using the top navigation you can access both the question list and the guest list.
 
 ![Admin dashboard](./public/images/dashboard.png)

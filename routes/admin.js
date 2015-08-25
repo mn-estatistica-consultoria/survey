@@ -29,9 +29,9 @@ router.use(function authCheck(req, res, next) {
             return;
           }
           
+          // check the password
           bcrypt.compare(req.body.password, user.password, function(err, matches) {
             if (matches) {
-              console.log('loggin the user in');
               req.session.loggedIn = true;
               req.session.username = user.username;
               req.flash('success', 'Logged in');
@@ -48,6 +48,7 @@ router.use(function authCheck(req, res, next) {
       req.flash('error', 'There have been validation errors: ' + util.inspect(errors));
     }
     else {
+      // save the original requested location so we can send the user back after logging in
       req.session.originalPath = (req.path == '/login') ? '/' : req.path;
     }
 
@@ -428,7 +429,7 @@ router.get('/users/:id/delete', function(req, res, next) {
     return;
   }
 
- models.User.destroy({
+  models.User.destroy({
     where: {
       id: req.params.id
     }
@@ -439,6 +440,7 @@ router.get('/users/:id/delete', function(req, res, next) {
   });
 });
 
+// callback for frontend validation to check unique usernames
 router.get('/users/validate', function(req, res, next) {
   models.User.findOne({
     where: {
