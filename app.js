@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var flash = require('express-flash');
 var uuid = require('uuid');
+var expressValidator = require('express-validator');
 
 var routes = require('./routes/index');
 var admin = require('./routes/admin');
@@ -22,6 +23,7 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({

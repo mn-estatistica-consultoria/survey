@@ -6,8 +6,8 @@
 # http://code.google.com/p/sequel-pro/
 #
 # Host: localhost (MySQL 5.5.27)
-# Database: sumo_survey
-# Generation Time: 2015-08-24 16:17:38 +0000
+# Database: survey
+# Generation Time: 2015-08-25 16:25:24 +0000
 # ************************************************************
 
 
@@ -183,6 +183,33 @@ VALUES
 	(40,8,'Dallas','2015-08-24 11:03:47','2015-08-24 11:03:47',NULL);
 
 /*!40000 ALTER TABLE `Responses` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table Users
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `Users`;
+
+CREATE TABLE `Users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `lastLogin` timestamp NULL DEFAULT NULL,
+  `createdAt` timestamp NULL DEFAULT NULL,
+  `updatedAt` timestamp NULL DEFAULT NULL,
+  `deletedAt` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOCK TABLES `Users` WRITE;
+/*!40000 ALTER TABLE `Users` DISABLE KEYS */;
+
+INSERT INTO `Users` (`id`, `username`, `password`, `lastLogin`, `createdAt`, `updatedAt`, `deletedAt`)
+VALUES
+	(1,'administrator','$2a$10$XHKooIJMmj3P0hzUuJKT1eanpuhjBB3HkMuyBpgbuAp8fg3CgRbty',NULL,'2015-08-25 11:03:28','2015-08-25 11:03:28',NULL);
+
+/*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 

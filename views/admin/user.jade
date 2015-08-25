@@ -1,0 +1,21 @@
+extends layout
+
+block content
+	.row
+		.col-md-12
+			h2 Edit User #{user.username}
+	hr
+	.row
+		.col-md-12
+			form(method='post', action='/admin/users/'+user.id)
+				.form-group
+					label.control-label(for='username') Username
+					input.form-control(type='text', name='username', id='username', value=user.username)
+				.form-group
+					label.control-label(for='password') Password
+					input.form-control(type='password', name='password', id='password')
+				.form-group
+					label.control-label(for='password2') Confirm Password
+					input.form-control(type='password', name='password2', id='password2')
+				a.btn.btn-link(href='/admin/users') Cancel
+				button.btn.btn-primary(type='submit') Save

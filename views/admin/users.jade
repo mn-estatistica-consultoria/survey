@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  .container
+    .row
+      .col-md-8
+        h2 Admin Users
+      .col-md-4
+        a.btn.btn-primary.btn-block(href='#', data-toggle='modal', data-target='#createModal')
+          i.glyphicon.glyphicon-plus
+          span  Add a User
+    .row
+      table.table.table-striped
+        each u in users
+          tr
+            td= u.username
+            td.col-md-2
+              if u.id !== 1
+                a.btn.btn-danger.btn-block(href='/admin/users/'+u.id+'/delete')
+                  i.glyphicon.glyphicon-trash
+                  span  Delete
+    +pagination(pagination.current, pagination.numPages)
+
+  .modal.fade(id='createModal', tabindex='-1', role='dialog', aria-labelledby='createModalLabel')
+    .modal-dialog(role='document')
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+          h4.modal-title(id='createModalLabel') Add a User
+        form(method='post', action='/admin/users/add')
+          .modal-body
+            .form-group
+              label.control-label(for='#username') Username
+              input.form-control(type='text', name='username', id='username', placeholder='Enter a username')
+            .form-group
+              label.control-label(for='#password') Password
+              input.form-control(type='password', name='password', id='password')
+            .form-group
+              label.control-label(for='#password2') Confirm
+              input.form-control(type='password', name='password2', id='password2')
+          .modal-footer
+            button.btn.btn-link(type='button', data-dismiss='modal') Close
+            button.btn.btn-primary(type='submit') Save

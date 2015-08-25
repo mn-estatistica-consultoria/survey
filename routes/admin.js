@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var models = require('../models');
+var bcrypt = require('bcrypt');
+var util = require('util');
 
 router.get('/', function(req, res, next) {
   models.Question.findAll({
@@ -48,6 +50,17 @@ router.get('/questions', function(req, res, next) {
 });
 
 router.post('/questions/add', function(req, res, next) {
+  req.checkBody('question_text', 'Invalid question.')
+    .notEmpty().withMessage('Question text is required.');
+
+  var errors = req.validationErrors();
+
+  if (errors) {
+    req.flash('error', 'There have been validation errors: ' + util.inspect(errors));
+    res.redirect('/admin/questions');
+    return;
+  }
+
   models.Question.build({
     text: req.body.question_text
   })
@@ -86,6 +99,17 @@ router.get('/questions/:id', function(req, res, next) {
 });
 
 router.post('/questions/:id', function(req, res, next) {
+  req.checkBody('question_text', 'Invalid question.')
+    .notEmpty().withMessage('Question text is required.');
+
+  var errors = req.validationErrors();
+
+  if (errors) {
+    req.flash('error', 'There have been validation errors: ' + util.inspect(errors));
+    res.redirect('/admin/questions/' + req.params.id);
+    return;
+  }
+
   models.Question.findById(req.params.id)
     .then(function(question) {
       question.set({
@@ -130,6 +154,17 @@ router.get('/questions/:id/results', function(req, res, next) {
 })
 
 router.post('/questions/:id/responses/add', function(req, res, next) {
+  req.checkBody('response_text', 'Invalid response.')
+    .notEmpty().withMessage('Response text is required.');
+
+  var errors = req.validationErrors();
+
+  if (errors) {
+    req.flash('error', 'There have been validation errors: ' + util.inspect(errors));
+    res.redirect('/admin/questions/' + req.params.id);
+    return;
+  }
+
   models.Response.build({
     QuestionId: req.params.id,
     text: req.body.response_text
@@ -160,7 +195,7 @@ router.get('/questions/:id/delete', function(req, res, next) {
 router.get('/questions/:id/responses/:responseId/delete', function(req, res, next) {
   models.Response.destroy({
     where: {
-      id: req.params.id
+      id: req.params.responseId
     }
   })
   .then(function() {
@@ -170,6 +205,17 @@ router.get('/questions/:id/responses/:responseId/delete', function(req, res, nex
 });
 
 router.post('/questions/:id/responses/:responseId', function(req, res, next) {
+  req.checkBody('response_text', 'Invalid question.')
+    .notEmpty().withMessage('Response text is required.');
+
+  var errors = req.validationErrors();
+
+  if (errors) {
+    req.flash('error', 'There have been validation errors: ' + util.inspect(errors));
+    res.redirect('/admin/questions/'+req.params.id);
+    return;
+  }
+
   models.Response.findById(req.params.responseId)
     .then(function(response) {
       response.set({
@@ -227,6 +273,109 @@ router.get('/guests/:id', function(req, res, next) {
         });
       });
     });
+});
+
+router.get('/users', function(req, res, next) {
+  var page = req.query.page || 1;
+  var limit = 5;
+  var offset = limit * (page-1);
+
+  models.User.findAndCountAll({
+    limit: limit, 
+    offset: offset,
+    order: 'createdAt desc'
+  })
+  .then(function(users) {
+    var total = users.count;
+    var numPages = Math.ceil(total/limit);
+    res.render('admin/users', {
+      users: users.rows,
+      pagination: {
+        current: page,
+        perPage: limit,
+        numPages: numPages,
+        hasNextPage: (numPages > page),
+        hasPrevPage: (page > 1)
+      }
+    });
+  });
+});
+
+router.post('/users/add', function(req, res, next) {
+  // validation settings
+  req.checkBody('username', 'Invalid username.')
+    .notEmpty().withMessage('Username is required.')
+    .len(6,20).withMessage('Username must be between 6 and 20 characters.');
+
+  req.checkBody('password', 'Invalid password.')
+    .notEmpty().withMessage('Password is required.')
+    .len(6).withMessage('Password must be at least 6 characters.');
+
+  req.checkBody('password2', 'Invalid password confirmation.')
+    .notEmpty().withMessage('Password confirmation is required.');
+
+  var errors = req.validationErrors();
+
+  // check password confirmation
+  // express-validator does not provide a rule for comparing 2 different
+  // input fields
+  if (req.body.password !== req.body.password2) {
+    var err = {
+      param: 'password',
+      msg: 'Password confirmation does not match.',
+      value: req.body.password
+    };
+
+    if (errors) {
+      errors.push(err);
+    }
+    else {
+      errors = [err];
+    }
+  }
+
+  if (errors) {
+    req.flash('error', 'There have been validation errors: ' + util.inspect(errors));
+    res.redirect('/admin/users');
+    return;
+  }
+
+  // hash the password with bcrypt and save it in the database
+  bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.hash(req.body.password, salt, function(err, hash) {
+      models.User.build({
+        username: req.body.username,
+        password: hash
+      })
+      .save()
+      .then(function(question) {
+        req.flash('success', 'User created');
+        res.redirect('/admin/users');
+      })
+      .catch(function(error) {
+        req.flash('error', error);
+        res.redirect('/admin/users');
+      });
+    });
+  });
+});
+
+router.get('/users/:id/delete', function(req, res, next) {
+  if (req.params.id === 1) {
+    req.flash('error', 'User "administrator" can not be deleted.');
+    res.redirect('/admin/users');
+    return;
+  }
+
+ models.User.destroy({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then(function() {
+    req.flash('success', 'User has been deleted');
+    res.redirect('/admin/users');
+  });
 });
 
 module.exports = router;
